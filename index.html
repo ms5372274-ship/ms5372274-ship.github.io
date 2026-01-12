@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mohan | Tic Tac Toe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: white;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 20px;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            background: #1e293b;
+            font-size: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+        .cell:hover {
+            background: #334155;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome, I'm Mohan 👋</h1>
+    <p>Play Tic Tac Toe</p>
+
+    <div class="board" id="board">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+    </div>
+
+    <button onclick="resetGame()">Restart Game</button>
+
+    <script>
+        const cells = document.querySelectorAll(".cell");
+        let currentPlayer = "X";
+        let gameActive = true;
+
+        const winningCombinations = [
+            [0,1,2],[3,4,5],[6,7,8],
+            [0,3,6],[1,4,7],[2,5,8],
+            [0,4,8],[2,4,6]
+        ];
+
+        cells.forEach((cell, index) => {
+            cell.addEventListener("click", () => {
+                if (cell.textContent === "" && gameActive) {
+                    cell.textContent = currentPlayer;
+                    checkWinner();
+                    currentPlayer = currentPlayer === "X" ? "O" : "X";
+                }
+            });
+        });
+
+        function checkWinner() {
+            winningCombinations.forEach(combo => {
+                const [a, b, c] = combo;
+                if (
+                    cells[a].textContent &&
+                    cells[a].textContent === cells[b].textContent &&
+                    cells[a].textContent === cells[c].textContent
+                ) {
+                    alert(cells[a].textContent + " Wins!");
+                    gameActive = false;
+                }
+            });
+        }
+
+        function resetGame() {
+            cells.forEach(cell => cell.textContent = "");
+            currentPlayer = "X";
+            gameActive = true;
+        }
+    </script>
+
+</body>
+</html>
